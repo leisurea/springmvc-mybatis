@@ -7,6 +7,7 @@ import net.person.service.ShuService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,9 +20,21 @@ public class ShuController {
     @Autowired
     public ShuService shuServiceImpl;
 
-    @RequestMapping(value = "/getShu", method = RequestMethod.GET)
+    @RequestMapping(value = "/getShu", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public @ResponseBody
-    String getShu(long id) {
+    String getShuById(long id) {
+        ShuModel shuModel = shuServiceImpl.getShu(id);
+        return new Gson().toJson(shuModel);
+    }
+
+    /**
+     * rest风格
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/getShu/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    public @ResponseBody
+    String getShu(@PathVariable("id") int id) {
         ShuModel shuModel = shuServiceImpl.getShu(id);
         return new Gson().toJson(shuModel);
     }
