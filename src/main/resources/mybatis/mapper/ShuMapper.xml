@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.person.dao.ShuDao">
+    <resultMap id="ShuResultMap" type="net.person.model.ShuModel">
+        <result column="book_id" property="BookId" jdbcType="BIGINT" />
+        <result column="name" property="Name" jdbcType="VARCHAR" />
+        <result column="number" property="Number" jdbcType="INTEGER" />
+    </resultMap>
+
+
+    <!-- 查询表所有数据 -->
+    <select id="getShus" parameterType="ShuModel" resultMap="ShuResultMap">
+        SELECT * FROM book
+    </select>
+    <!--获取一本书-->
+    <select id="getShu" parameterType="long" resultType="shuModel">
+        select book_id ,name,number
+        from book
+        where book_id=#{ggg}
+    </select>
+    <!--添加书-->
+    <insert id="addBook" useGeneratedKeys="true" keyProperty="BookId" parameterType="shuModel">
+        insert into book(name, number) values (#{Name},#{Number})
+    </insert>
+    <!--更新-->
+    <update id="updateBook" parameterType="shuModel">
+        update book
+        set book.name = #{Name},
+        book.number = #{Number}
+        where book.book_id = #{BookId}
+    </update>
+    <!--删除-->
+    <delete id="deleteBook" parameterType="long">
+        delete from book where book.book_id=#{noname}
+    </delete>
+</mapper>

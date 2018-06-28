@@ -3,9 +3,11 @@ package net.person.service.impl;
 import net.person.dao.TestDao;
 import net.person.model.TestModel;
 import net.person.service.TestService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 /**
@@ -15,11 +17,9 @@ import java.util.List;
 @Transactional
 public class TestServiceImpl implements TestService {
 
-    public TestDao testDao;
     @Autowired
-    public void setTestDao(TestDao testDao) {
-        this.testDao = testDao;
-    }
+    public TestDao testDao;
+
     public List<TestModel> getAllTest() {
         return testDao.getAllTest();
     }

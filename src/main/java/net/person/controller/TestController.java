@@ -1,34 +1,29 @@
 package net.person.controller;
 
+import com.google.gson.Gson;
+
+import net.person.model.PersonModel;
 import net.person.model.TestModel;
+import net.person.service.PersonService;
 import net.person.service.TestService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-/**
- * 测试springMVC映射
- * Created by admin on 2018/1/31.
- */
 @Controller
 //@RequestMapping("/home")
 public class TestController {
-    //添加一个日志器
-    public TestService testServiceImpl;
 
     @Autowired
-    public void setTestService(TestService testServiceImpl) {
-        this.testServiceImpl = testServiceImpl;
-    }
+    public TestService testServiceImpl;
+    @Autowired
+    public PersonService personServiceImpl;
 
     // 首页
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -44,5 +39,29 @@ public class TestController {
         System.out.println(itemsList.size() + " username:" + username + " password:" + password);
         model.addAttribute("username", username);
         return "test";
+    }
+
+    /**
+     * 返回json
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    public @ResponseBody
+    String getAllLists() {
+        List<TestModel> itemsList = testServiceImpl.getAllTest();
+        return new Gson().toJson(itemsList);
+    }
+
+    /**
+     * 返回json
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getPersons", method = RequestMethod.GET)
+    public @ResponseBody
+    String getPersons() {
+        List<PersonModel> itemsList = personServiceImpl.getAllPerson();
+        return new Gson().toJson(itemsList);
     }
 }
